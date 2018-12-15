@@ -6,14 +6,13 @@ import App from "../common/App";
 const app = express();
 
 app.get("/api", (req, res) => {
-    res.send({ message: "I am a server route and can also be hot reloaded!" });
+  res.send({ message: "I am a server route and can also be hot reloaded!2" });
 });
 
 app.get("*", (req, res) => {
+  let application = renderToString(<App />);
 
-    let application = renderToString(<App />);
-
-    let html = `<!doctype html>
+  let html = `<!doctype html>
     <html class="no-js" lang="">
         <head>
             <meta charset="utf-8">
@@ -28,8 +27,7 @@ app.get("*", (req, res) => {
         </body>
     </html>`;
 
-    res.send(html);
-    
+  res.send(html);
 });
 
 export default app;

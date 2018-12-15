@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   devtool: "inline-source-map",
@@ -7,19 +8,26 @@ module.exports = {
     "react-hot-loader/patch",
     "webpack-dev-server/client?http://localhost:3001",
     "webpack/hot/only-dev-server",
-    "./client/index",
+    "./src/client/index",
   ],
   target: "web",
   module: {
     rules: [
       {
-        test: /\.js?$/,
-        use: "babel-loader",
-        include: [
-          path.join(__dirname, "client"),
-          path.join(__dirname, "common"),
-        ],
+        test: /\.(js|jsx|ts|tsx)$/,
+        loader: "babel-loader",
+        exclude: /node_modules/
       },
+      {
+        test: /\.(js|jsx|ts|tsx)?$/,
+        loader: 'prettier-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader'
+      }
     ],
   },
   plugins: [
@@ -29,7 +37,17 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": { BUILD_TARGET: JSON.stringify("client") },
     }),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+      memoryLimit: 2048,
+      tslint: path.resolve(__dirname, 'tslint.json'),
+      // reportFiles: ["./src/**"],
+      async: false
+    }),
   ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.mjs', '.js', '.graphql']
+  },
   devServer: {
     host: "localhost",
     port: 3001,
