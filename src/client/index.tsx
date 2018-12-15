@@ -11,7 +11,7 @@ render(
 );
 
 if (module.hot) {
-  module.hot.accept('../common/App', () => {
+  module.hot.accept('./App', () => {
     render(
       <AppContainer>
         <App />
