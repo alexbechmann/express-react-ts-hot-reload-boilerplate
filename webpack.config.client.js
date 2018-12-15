@@ -41,7 +41,7 @@ module.exports = {
       tsconfig: path.resolve(__dirname, 'tsconfig.json'),
       memoryLimit: 2048,
       tslint: path.resolve(__dirname, 'tslint.json'),
-      // reportFiles: ["./src/**"],
+      reportFiles: ["./src/**"],
       async: false
     }),
   ],
@@ -53,6 +53,7 @@ module.exports = {
     port: 3001,
     historyApiFallback: true,
     hot: true,
+    headers: { "Access-Control-Allow-Origin": "*" }
   },
   output: {
     path: path.join(__dirname, ".build"),

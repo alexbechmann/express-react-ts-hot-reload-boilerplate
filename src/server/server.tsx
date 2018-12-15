@@ -1,18 +1,20 @@
-import express from "express";
-import React from "react";
-import { renderToString } from "react-dom/server";
-import App from "../common/App";
+import express from 'express';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import App from '../common/App';
+import cors from 'cors';
 
 const app = express();
+// app.use(cors());
 
-app.get("/api", (req, res) => {
-  res.send({ message: "I am a server route and can also be hot reloaded!2" });
+app.get('/api', (req, res) => {
+  res.send({ message: 'I am a server route and can also be hot reloaded!4' });
 });
 
-app.get("*", (req, res) => {
-  let application = renderToString(<App />);
+app.get('*', (req, res) => {
+  const application = renderToString(<App />);
 
-  let html = `<!doctype html>
+  const html = `<!doctype html>
     <html class="no-js" lang="">
         <head>
             <meta charset="utf-8">
