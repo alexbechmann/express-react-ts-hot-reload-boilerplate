@@ -11,6 +11,7 @@ module.exports = {
     "./src/client/index",
   ],
   target: "web",
+  mode: "development",
   module: {
     rules: [
       {
